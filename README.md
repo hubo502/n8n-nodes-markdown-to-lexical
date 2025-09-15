@@ -1,48 +1,149 @@
-![Banner image](https://user-images.githubusercontent.com/10284570/173569848-c624317f-42b1-45a6-ab09-f0ea3c247648.png)
+# n8n-nodes-markdown-to-lexical
 
-# n8n-nodes-starter
+一个用于将 Markdown 转换为 Lexical 格式的 n8n 社区节点包。
 
-This repo contains example nodes to help you get started building your own custom integrations for [n8n](https://n8n.io). It includes the node linter and other dependencies.
+## 功能特性
 
-To make your custom node available to the community, you must create it as an npm package, and [submit it to the npm registry](https://docs.npmjs.com/packages-and-modules/contributing-packages-to-the-registry).
+- 🔄 将 Markdown 文本转换为 Lexical 编辑器格式
+- 📝 支持丰富的 Markdown 语法元素
+- 🔗 完全集成到 n8n 工作流中
+- ⚡ 基于 Lexical 无头编辑器的高性能转换
 
-If you would like your node to be available on n8n cloud you can also [submit your node for verification](https://docs.n8n.io/integrations/creating-nodes/deploy/submit-community-nodes/).
+## 支持的 Markdown 元素
 
-## Prerequisites
+该节点支持以下 Markdown 语法元素的转换：
 
-You need the following installed on your development machine:
+- **标题** (H1-H6)
+- **引用块** (Blockquotes)
+- **列表** (有序和无序列表)
+- **代码块** 和行内代码
+- **链接**
+- **文本标记** (粗体、斜体等)
 
-* [git](https://git-scm.com/downloads)
-* Node.js and npm. Minimum version Node 20. You can find instructions on how to install both using nvm (Node Version Manager) for Linux, Mac, and WSL [here](https://github.com/nvm-sh/nvm). For Windows users, refer to Microsoft's guide to [Install NodeJS on Windows](https://docs.microsoft.com/en-us/windows/dev-environment/javascript/nodejs-on-windows).
-* Install n8n with:
-  ```
-  npm install n8n -g
-  ```
-* Recommended: follow n8n's guide to [set up your development environment](https://docs.n8n.io/integrations/creating-nodes/build/node-development-environment/).
+## 安装
 
-## Using this starter
+### 通过 n8n 社区节点安装
 
-These are the basic steps for working with the starter. For detailed guidance on creating and publishing nodes, refer to the [documentation](https://docs.n8n.io/integrations/creating-nodes/).
+1. 在 n8n 实例中，转到 **设置 > 社区节点**
+2. 选择 **安装**
+3. 输入 `n8n-nodes-markdown-to-lexical`
+4. 点击 **安装**
 
-1. [Generate a new repository](https://github.com/n8n-io/n8n-nodes-starter/generate) from this template repository.
-2. Clone your new repo:
-   ```
-   git clone https://github.com/<your organization>/<your-repo-name>.git
-   ```
-3. Run `npm i` to install dependencies.
-4. Open the project in your editor.
-5. Browse the examples in `/nodes` and `/credentials`. Modify the examples, or replace them with your own nodes.
-6. Update the `package.json` to match your details.
-7. Run `npm run lint` to check for errors or `npm run lintfix` to automatically fix errors when possible.
-8. Test your node locally. Refer to [Run your node locally](https://docs.n8n.io/integrations/creating-nodes/test/run-node-locally/) for guidance.
-9. Replace this README with documentation for your node. Use the [README_TEMPLATE](README_TEMPLATE.md) to get started.
-10. Update the LICENSE file to use your details.
-11. [Publish](https://docs.npmjs.com/packages-and-modules/contributing-packages-to-the-registry) your package to npm.
+### 手动安装
 
-## More information
+要手动安装该节点包，请在 n8n 根文件夹中运行以下命令：
 
-Refer to our [documentation on creating nodes](https://docs.n8n.io/integrations/creating-nodes/) for detailed information on building your own nodes.
+```bash
+npm install n8n-nodes-markdown-to-lexical
+```
 
-## License
+## 使用方法
 
-[MIT](https://github.com/n8n-io/n8n-nodes-starter/blob/master/LICENSE.md)
+1. 在 n8n 工作流中添加 **Markdown to Lexical** 节点
+2. 在节点配置中输入要转换的 Markdown 文本
+3. 执行节点，转换后的 Lexical 格式数据将在 `lexical` 字段中输出
+
+### 输入
+
+- **Markdown**: 要转换的 Markdown 文本（支持多行输入）
+
+### 输出
+
+节点将在输出数据的 `lexical` 字段中返回转换后的 Lexical 编辑器状态对象。
+
+## 示例
+
+### 输入 Markdown:
+```markdown
+# 标题
+
+这是一个 **粗体** 文本和一个 [链接](https://example.com)。
+
+- 列表项 1
+- 列表项 2
+
+> 这是一个引用块
+```
+
+### 输出:
+转换后的数据将包含一个 `lexical` 字段，其中包含 Lexical 编辑器的 JSON 状态。
+
+## 技术实现
+
+该节点基于以下技术构建：
+
+- **Lexical**: Meta 开发的现代富文本编辑器框架
+- **@lexical/headless**: 用于服务器端转换的无头编辑器
+- **@lexical/markdown**: Markdown 转换器
+- **n8n-workflow**: n8n 工作流集成
+
+## 开发
+
+### 环境要求
+
+- Node.js >= 20.15
+- npm 或 pnpm
+
+### 本地开发
+
+```bash
+# 克隆仓库
+git clone https://github.com/hubo502/n8n-markdown-to-lexical.git
+cd n8n-markdown-to-lexical
+
+# 安装依赖
+npm install
+
+# 开发模式（监听文件变化）
+npm run dev
+
+# 构建
+npm run build
+
+# 代码格式化
+npm run format
+
+# 代码检查
+npm run lint
+
+# 修复代码问题
+npm run lintfix
+```
+
+### 项目结构
+
+```
+├── nodes/
+│   └── MarkdownToLexical/
+│       ├── MarkdownToLexical.node.ts    # 主节点实现
+│       └── MarkdownToLexical.node.json  # 节点配置
+├── utilities/
+│   └── convertMarkdownToLexical.ts      # 核心转换逻辑
+├── package.json                         # 项目配置
+└── tsconfig.json                        # TypeScript 配置
+```
+
+## 许可证
+
+MIT License
+
+## 作者
+
+**Boris Hu**
+- Email: hubo502@gmail.com
+- GitHub: [hubo502](https://github.com/hubo502)
+
+## 贡献
+
+欢迎提交 Issue 和 Pull Request！
+
+## 版本历史
+
+### 0.1.0
+- 初始版本
+- 基本的 Markdown 到 Lexical 转换功能
+- 支持标题、列表、链接、代码块等常用元素
+
+---
+
+如果您觉得这个项目有用，请给它一个 ⭐️！
