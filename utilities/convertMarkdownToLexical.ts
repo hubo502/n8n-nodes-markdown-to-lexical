@@ -1,11 +1,16 @@
 import { createHeadlessEditor } from '@lexical/headless';
-import { $convertFromMarkdownString, TRANSFORMERS } from '@lexical/markdown';
+import { $convertFromMarkdownString } from '@lexical/markdown';
 import { $getRoot } from 'lexical';
 import { HeadingNode, QuoteNode } from '@lexical/rich-text';
 import { ListItemNode, ListNode } from '@lexical/list';
 import { CodeHighlightNode, CodeNode } from '@lexical/code';
 import { LinkNode } from '@lexical/link';
 import { MarkNode } from '@lexical/mark';
+import { BlockNode } from './nodes/block/BlockNode';
+import { BLOCK_TRANSFORMER } from './nodes/block/BlockTransformer';
+import { TRANSFORMERS } from '@lexical/markdown';
+
+export const EXTENDED_TRANSFORMERS = [...TRANSFORMERS, BLOCK_TRANSFORMER];
 
 export const convertMarkdownToLexical = (inputs: string): object => {
 	const editor = createHeadlessEditor({
@@ -18,6 +23,7 @@ export const convertMarkdownToLexical = (inputs: string): object => {
 			CodeHighlightNode,
 			LinkNode,
 			MarkNode,
+			BlockNode,
 		],
 		onError: () => {},
 	});
@@ -26,7 +32,7 @@ export const convertMarkdownToLexical = (inputs: string): object => {
 
 	editor.update(() => {
 		$getRoot().clear();
-		$convertFromMarkdownString(inputs, TRANSFORMERS);
+		$convertFromMarkdownString(inputs, EXTENDED_TRANSFORMERS);
 	});
 
 	editor.read(() => {

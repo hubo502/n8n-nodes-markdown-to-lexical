@@ -19,6 +19,26 @@
 - **代码块** 和行内代码
 - **链接**
 - **文本标记** (粗体、斜体等)
+- **自定义Block标签** (支持任意属性的自定义块元素)
+
+### 自定义Block标签
+
+该节点支持自定义的 `<block>` 标签，可以包含任意属性：
+
+```markdown
+<block type="note" name="重要提示" title="标题" content="内容" custom="自定义值"/>
+```
+
+**属性映射规则：**
+- `type` → `blockType`
+- `name` → `blockName`
+- 其他属性保持原名
+- 支持任意自定义属性
+
+**导出时的属性映射：**
+- `blockType` → `type`
+- `blockName` → `name`
+- 其他属性保持原名
 
 ## 安装
 
@@ -63,6 +83,8 @@ npm install n8n-nodes-markdown-to-lexical
 - 列表项 2
 
 > 这是一个引用块
+
+<block type="note" name="重要提示" title="注意事项" content="这是一个自定义块元素" priority="high"/>
 ```
 
 ### 输出:
@@ -118,7 +140,11 @@ npm run lintfix
 │       ├── MarkdownToLexical.node.ts    # 主节点实现
 │       └── MarkdownToLexical.node.json  # 节点配置
 ├── utilities/
-│   └── convertMarkdownToLexical.ts      # 核心转换逻辑
+│   ├── convertMarkdownToLexical.ts      # 核心转换逻辑
+│   └── nodes/
+│       └── block/
+│           ├── BlockNode.ts             # 自定义Block节点实现
+│           └── BlockTransformer.ts      # Block标签转换器
 ├── package.json                         # 项目配置
 └── tsconfig.json                        # TypeScript 配置
 ```
@@ -138,6 +164,12 @@ MIT License
 欢迎提交 Issue 和 Pull Request！
 
 ## 版本历史
+
+### 0.2.0
+- 新增自定义Block标签支持
+- 支持任意属性的自定义块元素
+- 完善属性映射和导出功能
+- 增强Markdown到Lexical的转换能力
 
 ### 0.1.0
 - 初始版本

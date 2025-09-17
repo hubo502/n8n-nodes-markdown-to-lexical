@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-markdown-to-lexical",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Custom node for n8n that converts Markdown to Lexical",
   "keywords": [
     "n8n-community-node-package"
