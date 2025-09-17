@@ -59,5 +59,8 @@
     "@lexical/markdown": "^0.35.0",
     "@lexical/rich-text": "^0.35.0",
     "lexical": "^0.35.0"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org"
   }
 }
